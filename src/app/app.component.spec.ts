@@ -4,6 +4,7 @@ import {TestBed, async, ComponentFixture} from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import {DebugElement} from "@angular/core";
 import {By} from "@angular/platform-browser";
+import { AlertModule } from "ng2-bootstrap"
 // import { AnotherComponentComponent } from './another-component/another-component.component'
 
 describe('AppComponent', () => {
@@ -26,18 +27,33 @@ describe('AppComponent(inline template)', () => {
   let de: DebugElement;
   let el: HTMLElement;
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AppComponent]
+      declarations: [AppComponent],
+      imports: [
+        AlertModule.forRoot()
+      ]
+    })
+      .compileComponents().then(() => {
+      fixture = TestBed.createComponent(AppComponent);
+      comp = fixture.componentInstance;
+
+      de = fixture.debugElement.query(By.css('h1'));
+      el = de.nativeElement;
+
     });
+  }));
 
-    fixture = TestBed.createComponent(AppComponent);
-    comp = fixture.componentInstance;
+  it('should display original title', () => {
+    fixture.detectChanges();
+    expect(el.textContent).toContain(comp.title);
+  });
 
-    de = fixture.debugElement.query(By.css('h1'));
-    el = de.nativeElement;
-
-  })
+  it('should display a different test title', () => {
+    comp.title = 'Test Title';
+    fixture.detectChanges();
+    expect(el.textContent).toContain('Test Title');
+  });
 
   it('logs me all i want', () => {
     console.log(comp);
