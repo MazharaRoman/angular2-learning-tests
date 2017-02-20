@@ -6,11 +6,13 @@ import { AlertModule }from 'ng2-bootstrap';
 
 import { AppComponent } from './app.component';
 import { AnotherComponentComponent } from './another-component/another-component.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AnotherComponentComponent
+    AnotherComponentComponent,
+    WelcomeComponent
   ],
   imports: [
     AlertModule.forRoot(),
